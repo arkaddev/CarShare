@@ -4,12 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+    <TextView
+        android:id="@+id/textViewCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aktualny stan licznika: -- km"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:layout_marginBottom="8dp"/>
 
+    <TextView
+        android:id="@+id/textViewUserInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Użytkownik: "
+        android:textSize="16sp"
+        android:layout_marginTop="200dp"
+        />
     <TextView
         android:id="@+id/textViewUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Users will be displayed here"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginTop="200dp"/>
+
 
 </LinearLayout>
+
