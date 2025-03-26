@@ -1,35 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+
+    <!-- Tekst licznika na górze -->
     <TextView
         android:id="@+id/textViewCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aktualny stan licznika: -- km"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
         android:padding="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:text="Aktualny stan licznika: -- km"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <!-- Siatka z 4 kwadratami -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_gravity="center"
+        android:padding="8dp">
+
+        <!-- Pierwszy kwadrat -->
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="Dodaj przejazd" />
+
+        <!-- Drugi kwadrat -->
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="Historia przejazdów" />
+
+        <!-- Trzeci kwadrat -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="Tankowanie" />
+
+        <!-- Czwarty kwadrat -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="Ustawienia" />
+
+    </GridLayout>
+
+
 
     <TextView
         android:id="@+id/textViewUserInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
         android:text="Użytkownik: "
-        android:textSize="16sp"
-        android:layout_marginTop="200dp"
-        />
-    <TextView
-        android:id="@+id/textViewUsers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Users will be displayed here"
-        android:textSize="18sp"
-        android:layout_marginTop="200dp"/>
+        android:textSize="16sp" />
+
+
 
 
 </LinearLayout>
-

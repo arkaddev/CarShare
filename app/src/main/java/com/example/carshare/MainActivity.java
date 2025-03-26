@@ -97,9 +97,12 @@ public class MainActivity extends AppCompatActivity {
                     if (response.has("token")) {
                         String token = response.getString("token");
 
+                        String userId = response.getString("user_id");
+
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         intent.putExtra("token", token);  // Przekazujemy token
                         intent.putExtra("username", editTextUsername.getText().toString());
+                        intent.putExtra("userId", userId);  // Przekazujemy id użytkownika
                         startActivity(intent);
                         finish();  // Zakończenie bieżącej aktywności
 
