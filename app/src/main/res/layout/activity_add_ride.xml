@@ -1,0 +1,35 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Data (YYYY-MM-DD)" />
+
+    <EditText
+        android:id="@+id/editTextInitialCounter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Stan początkowy km"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editTextFinalCounter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Stan końcowy km"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj przejazd"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

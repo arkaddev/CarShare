@@ -26,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView textViewCounter; // Pole do wyświetlania aktualnego stanu licznika
 
-
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
 
     @Override
@@ -65,11 +64,21 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+//przekierowanie dla buttona nr 1
+        Button button1 = findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AddRideActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+
+                startActivity(intent);
+            }
+        });
 
 //przekierowanie dla buttona nr 2
-
         Button button2 = findViewById(R.id.button2);
-
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +160,7 @@ public class HomeActivity extends AppCompatActivity {
                         // Ustawienie aktualnego stanu licznika
                         if (lastRide != null) {
                             textViewCounter.setText("Aktualny stan licznika: \n" + lastRide.getFinalCounter() + " km");
+
                         } else {
                             textViewCounter.setText("Brak danych o stanie licznika");
                         }
