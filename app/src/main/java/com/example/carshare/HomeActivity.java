@@ -25,10 +25,13 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView textViewCounter; // Pole do wyświetlania aktualnego stanu licznika
+    private TextView textViewTotalRidesById; // Pole do wyświetlania przejazdow uzytkowika
 
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
 
     private Ride lastRide;
+
+    private int currentUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,10 @@ public class HomeActivity extends AppCompatActivity {
 
         // Inicjalizacja pola tekstowego dla licznika
         textViewCounter = findViewById(R.id.textViewCounter);
+
+        // Inicjalizacja pola tekstowego dla przejazdow uzytkowika
+        textViewTotalRidesById = findViewById(R.id.textViewTotalRidesById);
+
 
         // Odbieramy token przekazany z innego ekranu (np. logowania)
         String token = getIntent().getStringExtra("token");
@@ -54,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         String username = getIntent().getStringExtra("username");
 
         // Pobieramy user_id z zamiaru aktualnego użytkownika
-        int currentUserId = Integer.parseInt(getIntent().getStringExtra("userId"));
+        currentUserId = Integer.parseInt(getIntent().getStringExtra("userId"));
 
 
         if (username != null) {
@@ -144,10 +151,6 @@ public class HomeActivity extends AppCompatActivity {
                         lastRide = null; // Przechowujemy ostatni przejazd (najwyższe ID)
 
 
-                        // Pobieramy user_id z zamiaru aktualnego użytkownika
-                        //int currentUserId = Integer.parseInt(getIntent().getStringExtra("userId"));
-
-
                         for (int i = 0; i < ridesArray.length(); i++) {
                             JSONObject rideObject = ridesArray.getJSONObject(i);
 
@@ -176,18 +179,20 @@ public class HomeActivity extends AppCompatActivity {
 
                         // Obliczanie całkowitej przejechanej odległości i przygotowanie tekstu do wyświetlenia
                         int totalDistance = 0;
-                        StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
+                        //StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
+                        StringBuilder ridesText = new StringBuilder();
                         for (Ride ride : ridesList) {
-                            totalDistance += ride.getDistance();
-                            ridesText.append("ID: ").append(ride.getId())
-                                    .append(", Data: ").append(ride.getDate())
-                                    .append(", Km: ").append(ride.getDistance())
-                                    .append(", User ID: ").append(ride.getUserId()) // Dodanie user_id do wyświetlania
-                                    .append("\n");
+                            if (ride.getUserId() == currentUserId) {
+                                totalDistance += ride.getDistance();
+//                                ridesText.append("ID: ").append(ride.getId())
+//                                        .append(", Data: ").append(ride.getDate())
+//                                        .append(", Km: ").append(ride.getDistance())
+//                                        .append(", User ID: ").append(ride.getUserId()) // Dodanie user_id do wyświetlania
+//                                        .append("\n");
+                            }
                         }
-
                         ridesText.append("\nŁączny przebyty dystans: ").append(totalDistance).append(" km");
-
+                        textViewTotalRidesById.setText(ridesText.toString());
                     } else {
                         textViewCounter.setText("Brak danych o stanie licznika");
 

@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -20,7 +21,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
+        android:columnCount="3"
         android:rowCount="2"
         android:layout_gravity="center"
         android:padding="8dp">
@@ -30,9 +31,11 @@
             android:id="@+id/button1"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_margin="8dp"
+            android:layout_margin="2dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:textSize="12sp"
+            android:drawableTop="@android:drawable/ic_input_add"
             android:text="Dodaj przejazd" />
 
         <!-- Drugi kwadrat -->
@@ -40,38 +43,71 @@
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_margin="8dp"
+            android:layout_margin="2dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:text="Historia przejazdów" />
+            android:textSize="12sp"
+            android:drawableTop="@android:drawable/ic_menu_recent_history"
+            android:text="Historia" />
 
         <!-- Trzeci kwadrat -->
         <Button
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_margin="8dp"
+            android:layout_margin="2dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:textSize="12sp"
             android:text="Tankowanie" />
 
         <!-- Czwarty kwadrat -->
         <Button
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_margin="8dp"
+            android:layout_margin="2dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:textSize="12sp"
+            android:text="PŁatności" />
+
+        <!-- Piąty kwadrat -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:textSize="12sp"
+            android:text="Statystyki" />
+
+        <!-- Szósty kwadrat -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:textSize="12sp"
             android:text="Ustawienia" />
 
     </GridLayout>
 
-
-
+    <!-- Info o przejechanych kilometrach -->
+    <TextView
+        android:id="@+id/textViewTotalRidesById"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="Twoja podróż: -- km"
+        android:textSize="20sp"
+        android:layout_marginTop="50dp"/>
+    <!-- user info -->
     <TextView
         android:id="@+id/textViewUserInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="300dp"
         android:text="Użytkownik: "
         android:textSize="16sp" />
 
