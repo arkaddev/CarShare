@@ -28,12 +28,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
 
+    private Ride lastRide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        textViewCounter = findViewById(R.id.textViewCounter); // Inicjalizacja pola tekstowego dla licznika
+        // Inicjalizacja pola tekstowego dla licznika
+        textViewCounter = findViewById(R.id.textViewCounter);
 
         // Odbieramy token przekazany z innego ekranu (np. logowania)
         String token = getIntent().getStringExtra("token");
@@ -72,6 +74,13 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, AddRideActivity.class);
                 intent.putExtra("token", token);  // Przekazujemy token
                 intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                if (lastRide != null) {
+
+                    //Log.d("HomeActivity", "Final Counter: " + lastRide.getFinalCounter());
+                    //Toast.makeText(HomeActivity.this, "Final Counter: " + lastRide.getFinalCounter(), Toast.LENGTH_LONG).show();
+
+                    intent.putExtra("counter", lastRide.getFinalCounter()); // Przekazanie finalCounter
+                }
 
                 startActivity(intent);
             }
@@ -132,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
                         JSONArray ridesArray = response.getJSONArray("rides");
                         List<Ride> ridesList = new ArrayList<>();
 
-                        Ride lastRide = null; // Przechowujemy ostatni przejazd (najwyższe ID)
+                        lastRide = null; // Przechowujemy ostatni przejazd (najwyższe ID)
 
 
                         // Pobieramy user_id z zamiaru aktualnego użytkownika

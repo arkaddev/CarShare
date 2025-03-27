@@ -9,14 +9,19 @@
         android:id="@+id/editTextDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Data (YYYY-MM-DD)" />
+        android:hint="Data (YYYY-MM-DD)"
+        android:focusable="false"
+        android:clickable="false" />
 
     <EditText
         android:id="@+id/editTextInitialCounter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Stan początkowy km"
-        android:inputType="number" />
+        android:inputType="number"
+        android:focusable="false"
+        android:clickable="false"
+        />
 
     <EditText
         android:id="@+id/editTextFinalCounter"

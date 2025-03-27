@@ -3,6 +3,7 @@ package com.example.carshare;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import org.json.JSONObject;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddRideActivity extends AppCompatActivity {
 
@@ -22,6 +25,7 @@ public class AddRideActivity extends AppCompatActivity {
     private Button buttonSubmit;
     private String token;
     private int userId;
+    private int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,19 @@ public class AddRideActivity extends AppCompatActivity {
         editTextFinalCounter = findViewById(R.id.editTextFinalCounter);
         buttonSubmit = findViewById(R.id.buttonSubmit);
 
+        // Ustawienie bieżącej daty w formacie yyyy-MM-dd
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat.format(new Date());
+        editTextDate.setText(currentDate); // Ustawienie daty w polu EditText
+
+
+
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
         userId = intent.getIntExtra("userId", -1);
+        counter = getIntent().getIntExtra("counter", 0);
+
+        editTextInitialCounter.setText(String.valueOf(counter));
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,9 +99,17 @@ public class AddRideActivity extends AppCompatActivity {
                 os.close();
 
                 int responseCode = connection.getResponseCode();
-                return responseCode == 200 ? "success" : "error";
+                Log.d("AddRideTask", "Response Code: " + responseCode);  // Dodaj logowanie kodu odpowiedzi
+
+                if (responseCode == 200 || responseCode == 201) {
+                    return "success";
+                } else {
+                    return "error";
+                }
 
             } catch (Exception e) {
+                Log.e("AddRideTask", "Error adding ride", e);  // Logowanie błędu
+
                 e.printStackTrace();
                 return "error";
             }
@@ -97,6 +119,11 @@ public class AddRideActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result.equals("success")) {
                 Toast.makeText(AddRideActivity.this, "Przejazd dodany!", Toast.LENGTH_SHORT).show();
+
+                //Intent intent = new Intent(AddRideActivity.this, HomeActivity.class);
+                //startActivity(intent);  // Rozpoczyna HomeActivity
+
+
                 finish();
             } else {
                 Toast.makeText(AddRideActivity.this, "Błąd dodawania przejazdu", Toast.LENGTH_SHORT).show();
