@@ -26,12 +26,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView textViewCounter; // Pole do wyświetlania aktualnego stanu licznika
     private TextView textViewTotalRidesById; // Pole do wyświetlania przejazdow uzytkowika
-
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
-
     private Ride lastRide;
-
     private int currentUserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         // Inicjalizacja pola tekstowego dla licznika
         textViewCounter = findViewById(R.id.textViewCounter);
 
-        // Inicjalizacja pola tekstowego dla przejazdow uzytkowika
+        // Inicjalizacja pola tekstowego dla przejazdów użytkownika
         textViewTotalRidesById = findViewById(R.id.textViewTotalRidesById);
 
 
@@ -76,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 //przekierowanie dla buttona nr 1
         Button button1 = findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, AddRideActivity.class);
@@ -171,7 +170,8 @@ public class HomeActivity extends AppCompatActivity {
 
                         // Ustawienie aktualnego stanu licznika
                         if (lastRide != null) {
-                            textViewCounter.setText("Aktualny stan licznika: \n" + lastRide.getFinalCounter() + " km");
+                            //textViewCounter.setText("Aktualny stan licznika: \n" + lastRide.getFinalCounter() + " km");
+                            textViewCounter.setText(lastRide.getFinalCounter() + " km");
 
                         } else {
                             textViewCounter.setText("Brak danych o stanie licznika");

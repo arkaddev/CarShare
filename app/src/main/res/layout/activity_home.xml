@@ -7,13 +7,23 @@
 
     <!-- Tekst licznika na górze -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="2dp"
+        android:text="Aktualny stan licznika (km):"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Tekst licznik km -->
+    <TextView
         android:id="@+id/textViewCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="16dp"
-        android:text="Aktualny stan licznika: -- km"
-        android:textSize="24sp"
+        android:padding="6dp"
+        android:text="-- km"
+        android:textSize="42sp"
         android:textStyle="bold" />
 
 
