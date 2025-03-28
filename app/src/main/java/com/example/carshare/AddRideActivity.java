@@ -125,6 +125,7 @@ public class AddRideActivity extends AppCompatActivity {
 
 
                 finish();
+
             } else {
                 Toast.makeText(AddRideActivity.this, "Błąd dodawania przejazdu", Toast.LENGTH_SHORT).show();
             }

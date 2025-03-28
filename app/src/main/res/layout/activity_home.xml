@@ -117,7 +117,7 @@
         android:id="@+id/textViewUserInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="200dp"
         android:text="Użytkownik: "
         android:textSize="16sp" />
 

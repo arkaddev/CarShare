@@ -30,6 +30,8 @@ public class HomeActivity extends AppCompatActivity {
     private Ride lastRide;
     private int currentUserId;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (username != null) {
             // Wyświetlamy login w odpowiednim TextView
-            textViewUserInfo.setText("Zalogowany: " + username + " ID: " + currentUserId);
+            textViewUserInfo.setText("Zalogowany: " + username + " ID: " + currentUserId + "token: " + token);
         } else {
             textViewUserInfo.setText("Brak danych o użytkowniku.");
         }
@@ -105,8 +107,33 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
+    // AUTOMATYCZNE ODŚWIEŻANIE DANYCH PO POWROCIE DO AKTYWNOŚCI
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshData(); // Pobiera aktualne dane o przejazdach
+    }
+
+    // Metoda do pobrania nowych danych
+    private void refreshData() {
+        String token = getIntent().getStringExtra("token");
+        if (token != null) {
+            new RidesDataTask().execute(token);
+        }
+    }
+
+
+
+
     // Klasa do pobierania danych o przejazdach w tle
     private class RidesDataTask extends AsyncTask<String, Void, String> {
+
+
+
 
         @Override
         protected String doInBackground(String... params) {
