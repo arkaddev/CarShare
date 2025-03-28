@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewCounter; // Pole do wyświetlania aktualnego stanu licznika
     private TextView textViewTotalRidesById; // Pole do wyświetlania przejazdow uzytkowika
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
+    private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
     private Ride lastRide;
     private int currentUserId;
 
@@ -42,6 +43,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // Inicjalizacja pola tekstowego dla przejazdów użytkownika
         textViewTotalRidesById = findViewById(R.id.textViewTotalRidesById);
+        textViewPaymentById = findViewById(R.id.textViewPaymentById);
+
 
 
         // Odbieramy token przekazany z innego ekranu (np. logowania)
@@ -220,6 +223,15 @@ public class HomeActivity extends AppCompatActivity {
                         }
                         ridesText.append("\nŁączny przebyty dystans: ").append(totalDistance).append(" km");
                         textViewTotalRidesById.setText(ridesText.toString());
+
+                        // Obliczenie kwoty do zaplaty
+                        StringBuilder paymentText = new StringBuilder();
+                        double fuelPrice = 3;
+                        double petrolConsumption = 9;
+                        double totalCost = ((petrolConsumption * totalDistance)/100)*fuelPrice;
+                        paymentText.append("Do zapłaty: ").append(totalCost).append(" zł");
+                        textViewPaymentById.setText(paymentText);
+
                     } else {
                         textViewCounter.setText("Brak danych o stanie licznika");
 
