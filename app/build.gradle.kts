@@ -42,7 +42,7 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
-    implementation("com.google.android.material:material:1.6.0")
+    implementation(libs.material.v160)
 
 }
 

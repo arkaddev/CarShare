@@ -46,6 +46,7 @@
             android:layout_rowWeight="1"
             android:textSize="12sp"
             android:drawableTop="@android:drawable/ic_input_add"
+            android:backgroundTint="#ACCEE9"
             android:text="Dodaj przejazd" />
 
         <!-- Drugi kwadrat -->
@@ -68,6 +69,8 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:textSize="12sp"
+            android:drawableTop="@android:drawable/ic_lock_idle_charging"
+            android:backgroundTint="#ACCEE9"
             android:text="Tankowanie" />
 
         <!-- Czwarty kwadrat -->
@@ -78,6 +81,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:textSize="12sp"
+            android:drawableTop="@android:drawable/ic_lock_idle_lock"
             android:text="PŁatności" />
 
         <!-- Piąty kwadrat -->
@@ -88,6 +92,8 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:textSize="12sp"
+            android:drawableTop="@android:drawable/ic_menu_sort_by_size"
+            android:backgroundTint="#ACCEE9"
             android:text="Statystyki" />
 
         <!-- Szósty kwadrat -->
@@ -98,37 +104,68 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:textSize="12sp"
+            android:drawableTop="@android:drawable/ic_menu_manage"
             android:text="Ustawienia" />
 
     </GridLayout>
 
-    <!-- Info o przejechanych kilometrach -->
-    <TextView
-        android:id="@+id/textViewTotalRidesById"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="6dp"
-        android:text="Twoja podróż: -- km"
-        android:textSize="20sp"
-        android:layout_marginTop="50dp"/>
 
-    <!-- Info o platnosciach za przejazd -->
-    <TextView
-        android:id="@+id/textViewPaymentById"
-        android:layout_width="wrap_content"
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="6dp"
-        android:text="Płatność: "
-        android:textSize="20sp"/>
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        android:padding="12dp"
+        android:backgroundTint="#ACCEE9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:gravity="center_horizontal">
+
+
+            <!-- Info o przejechanych kilometrach -->
+            <TextView
+                android:id="@+id/textViewTotalRidesById"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Twoja podróż: -- km"
+                android:textSize="18sp"
+                android:padding="6dp"/>
+
+            <!-- Info o platnosciach za przejazd -->
+            <TextView
+                android:id="@+id/textViewPaymentById"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Płatność: "
+                android:textSize="18sp"
+                android:padding="6dp"/>
+
+            <!-- przycisk zapłać -->
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_menu_upload"
+                android:text="Zapłać" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 
     <!-- user info -->
     <TextView
         android:id="@+id/textViewUserInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="140dp"
         android:text="Użytkownik: "
         android:textSize="16sp" />
 

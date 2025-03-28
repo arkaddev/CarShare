@@ -221,7 +221,7 @@ public class HomeActivity extends AppCompatActivity {
 //                                        .append("\n");
                             }
                         }
-                        ridesText.append("\nŁączny przebyty dystans: ").append(totalDistance).append(" km");
+                        ridesText.append("Łączny przebyty dystans: ").append(totalDistance).append(" km");
                         textViewTotalRidesById.setText(ridesText.toString());
 
                         // Obliczenie kwoty do zaplaty
