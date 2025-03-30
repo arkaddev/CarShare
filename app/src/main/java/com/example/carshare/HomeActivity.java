@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
     private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
 
-    private Button buttonAdminRides;
+    private Button buttonAdminRides, buttonAdminPayments;
     private Ride lastRide;
     private int currentUserId;
 
@@ -125,7 +125,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        //przekierowanie dla button Admin
+        //przekierowanie dla button Admin Ride
         buttonAdminRides = findViewById(R.id.buttonAdminRides);
         buttonAdminRides.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +135,17 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+//przekierowanie dla buttona Admin Payment
+        buttonAdminPayments = findViewById(R.id.buttonAdminPayments);
+        buttonAdminPayments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AdminPaymentActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
 
     }
 

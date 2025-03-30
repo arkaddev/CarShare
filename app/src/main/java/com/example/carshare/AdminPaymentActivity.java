@@ -21,14 +21,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentActivity extends AppCompatActivity {
+public class AdminPaymentActivity extends AppCompatActivity {
 
     private TextView textViewPayments;   // Pole do wyświetlania platnosci
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment);
+        setContentView(R.layout.activity_admin_payment);
 
         textViewPayments = findViewById(R.id.textViewPayments); // Inicjalizacja pola tekstowego dla przejazdów
 
@@ -37,7 +37,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         if (token != null) {
             // Pobieramy listę przejazdów, przekazując token
-            new PaymentActivity.PaymentsDataTask().execute(token);
+            new AdminPaymentActivity.PaymentsDataTask().execute(token);
         } else {
             Toast.makeText(this, "No token found", Toast.LENGTH_SHORT).show();
         }
