@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private double totalCost;
     private int totalDistance;
+    private List<Integer> filteredRideIds;
 
 
     @Override
@@ -136,6 +137,7 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
                 intent.putExtra("totalDistance", totalDistance);
                 intent.putExtra("totalCost", totalCost);
+                intent.putExtra("filteredRideIds", new ArrayList<>(filteredRideIds));
                 startActivity(intent);
             }
         });
@@ -159,8 +161,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, AdminPaymentActivity.class);
                 intent.putExtra("token", token);  // Przekazujemy token
-                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
-                startActivity(intent);
+                 startActivity(intent);
             }
         });
 
@@ -225,6 +226,7 @@ public class HomeActivity extends AppCompatActivity {
                     if (response.has("rides")) {
                         JSONArray ridesArray = response.getJSONArray("rides");
                         List<Ride> ridesList = new ArrayList<>();
+                        filteredRideIds = new ArrayList<>();
 
                         lastRide = null; // Przechowujemy ostatni przejazd (najwyższe ID)
 
@@ -263,8 +265,9 @@ public class HomeActivity extends AppCompatActivity {
                         //StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
                         StringBuilder ridesText = new StringBuilder();
                         for (Ride ride : ridesList) {
-                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0) {
+                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0 && ride.getArchive() == 0) {
                                 totalDistance += ride.getDistance();
+                                filteredRideIds.add(ride.getId()); // Dodajemy ID do listy
 //                                ridesText.append("ID: ").append(ride.getId())
 //                                        .append(", Data: ").append(ride.getDate())
 //                                        .append(", Km: ").append(ride.getDistance())
@@ -274,6 +277,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
                         ridesText.append("Łączny przebyty dystans: ").append(totalDistance).append(" km");
                         textViewTotalRidesById.setText(ridesText.toString());
+
 
                         // Obliczenie kwoty do zaplaty
                         StringBuilder paymentText = new StringBuilder();

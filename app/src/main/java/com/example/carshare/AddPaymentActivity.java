@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.example.carshare.Model.Ride;
@@ -32,6 +33,8 @@ public class AddPaymentActivity extends AppCompatActivity {
     private int userId;
     private int totalDistance;
     private double totalCost;
+
+    private ArrayList<Integer> filteredRideIds;
 
 
     @Override
@@ -56,6 +59,9 @@ public class AddPaymentActivity extends AppCompatActivity {
         userId = intent.getIntExtra("userId", -1);
         totalDistance = intent.getIntExtra("totalDistance", -1);
         totalCost = intent.getDoubleExtra("totalCost", -1);
+        filteredRideIds = intent.getIntegerArrayListExtra("filteredRideIds");
+
+        //Toast.makeText(AddPaymentActivity.this, "Płatność dodana!" + filteredRideIds, Toast.LENGTH_LONG).show();
 
         editTextTotalDistance.setText(String.valueOf(totalDistance));
         editTextTotalCost.setText(String.valueOf(totalCost));
@@ -71,6 +77,13 @@ public class AddPaymentActivity extends AppCompatActivity {
     }
 
     private void submitRide() {
+
+        // Sprawdzenie, czy lista filteredRideIds jest pusta
+        if (filteredRideIds == null || filteredRideIds.isEmpty()) {
+            Toast.makeText(this, "Brak przejazdów do archiwizacji!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String date = editTextDate.getText().toString();
         String totalDistanceString = editTextTotalDistance.getText().toString();
         String totalCostString = editTextTotalCost.getText().toString();
@@ -132,13 +145,65 @@ public class AddPaymentActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result.equals("success")) {
 
-                Toast.makeText(AddPaymentActivity.this, "Płatność dodana!", Toast.LENGTH_LONG).show();
-
-
-                finish();
+                //Toast.makeText(AddPaymentActivity.this, "Płatność dodana!", Toast.LENGTH_LONG).show();
+                new UpdateRidesTask().execute(filteredRideIds);
+                //finish();
 
             } else {
                 Toast.makeText(AddPaymentActivity.this, "Błąd dodawania płatności.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    // AsyncTask do aktualizacji przejazdów (archiwizacja)
+    private class UpdateRidesTask extends AsyncTask<ArrayList<Integer>, Void, String> {
+        @Override
+        protected String doInBackground(ArrayList<Integer>... params) {
+            ArrayList<Integer> rideIds = params[0];
+
+            for (int rideId : rideIds) {  // Iterujemy po każdym ID i wysyłamy osobne żądanie PUT
+                try {
+                    URL url = new URL("http://tankujemy.online/rides.php");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("PUT");
+                    connection.setRequestProperty("Authorization", "Bearer " + token);
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    connection.setDoOutput(true);
+
+                    JSONObject postData = new JSONObject();
+                    postData.put("id", rideId);
+                    postData.put("archive", 1);
+
+                    OutputStream os = connection.getOutputStream();
+                    os.write(postData.toString().getBytes("UTF-8"));
+                    os.flush();
+                    os.close();
+
+                    int responseCode = connection.getResponseCode();
+
+                    if (responseCode == 200 || responseCode == 201) {
+                        connection.disconnect();
+                        return "success";
+                    }
+
+                } catch (Exception e) {
+                    Log.e("UpdateRidesTask", "Error archiwizowania przejazdów", e);  // Logowanie błędu
+                    e.printStackTrace();
+                }
+            }
+
+            // Jeśli żaden warunek nie został spełniony, zwróć "error"
+            return "error";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.equals("success")) {
+                Toast.makeText(AddPaymentActivity.this, "Przejazdy zarchiwizowane!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(AddPaymentActivity.this, "Błąd archiwizacji przejazdów.", Toast.LENGTH_SHORT).show();
             }
         }
     }
