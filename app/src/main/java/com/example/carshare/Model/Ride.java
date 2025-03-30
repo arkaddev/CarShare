@@ -1,19 +1,25 @@
-package com.example.carshare;
+package com.example.carshare.Model;
 
 public class Ride {
     private int id;
     private String date;
     private int initialCounter;
     private int finalCounter;
-    private int userId; // Dodane pole user_id
+    private int userId;
 
-    public Ride(int id, String date, int initialCounter, int finalCounter, int userId) {
+    private int archive;
+    private int correct;
+
+    public Ride(int id, String date, int initialCounter, int finalCounter, int userId, int archive, int correct) {
         this.id = id;
         this.date = date;
         this.initialCounter = initialCounter;
         this.finalCounter = finalCounter;
         this.userId = userId;
+        this.archive = archive;
+        this.correct = correct;
     }
+
 
     public int getId() {
         return id;
@@ -33,6 +39,14 @@ public class Ride {
 
     public int getUserId() {
         return userId;
+    }
+
+    public int getArchive() {
+        return archive;
+    }
+
+    public int getCorrect() {
+        return correct;
     }
 
     public int getDistance() {

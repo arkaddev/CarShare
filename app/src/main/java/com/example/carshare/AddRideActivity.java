@@ -23,9 +23,12 @@ public class AddRideActivity extends AppCompatActivity {
 
     private EditText editTextDate, editTextInitialCounter, editTextFinalCounter;
     private Button buttonSubmit;
+    private Button buttonCorrect;
     private String token;
     private int userId;
     private int counter;
+
+    private int correctValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class AddRideActivity extends AppCompatActivity {
         editTextInitialCounter = findViewById(R.id.editTextInitialCounter);
         editTextFinalCounter = findViewById(R.id.editTextFinalCounter);
         buttonSubmit = findViewById(R.id.buttonSubmit);
+        buttonCorrect = findViewById(R.id.buttonCorrect);
 
         // Ustawienie bieżącej daty w formacie yyyy-MM-dd
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,12 +55,31 @@ public class AddRideActivity extends AppCompatActivity {
 
         editTextInitialCounter.setText(String.valueOf(counter));
 
+//        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                submitRide();
+//            }
+//        });
+
+        // Obsługa kliknięcia przycisku buttonSubmit
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                correctValue = 0;  // Ustawiamy correct na 0
                 submitRide();
             }
         });
+
+        // Obsługa kliknięcia przycisku buttonCorrect
+        buttonCorrect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                correctValue = 1;  // Ustawiamy correct na 1
+                submitRide();
+            }
+        });
+
     }
 
     private void submitRide() {
@@ -92,6 +115,8 @@ public class AddRideActivity extends AppCompatActivity {
                 postData.put("date", date);
                 postData.put("initial_counter", Integer.parseInt(initialCounter));
                 postData.put("final_counter", Integer.parseInt(finalCounter));
+                postData.put("archive", 0);
+                postData.put("correct", correctValue);
 
                 OutputStream os = connection.getOutputStream();
                 os.write(postData.toString().getBytes());

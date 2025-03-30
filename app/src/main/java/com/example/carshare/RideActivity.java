@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshare.Model.Ride;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,9 +103,11 @@ public class RideActivity extends AppCompatActivity {
                             String date = rideObject.getString("date");
                             int initialCounter = rideObject.getInt("initial_counter");
                             int finalCounter = rideObject.getInt("final_counter");
-                            int userId = rideObject.getInt("user_id"); // Pobranie user_id
+                            int userId = rideObject.getInt("user_id");
+                            int archive = rideObject.getInt("archive");
+                            int correct = rideObject.getInt("correct");
 
-                            Ride ride = new Ride(id, date, initialCounter, finalCounter, userId);
+                            Ride ride = new Ride(id, date, initialCounter, finalCounter, userId, archive, correct);
                             ridesList.add(ride);
 
 
@@ -120,7 +124,9 @@ public class RideActivity extends AppCompatActivity {
                             ridesText.append("ID: ").append(ride.getId())
                                     .append(", Data: ").append(ride.getDate())
                                     .append(", Km: ").append(ride.getDistance())
-                                    .append(", User ID: ").append(ride.getUserId()) // Dodanie user_id do wyświetlania
+                                    .append(", User ID: ").append(ride.getUserId())
+                                    .append(" Archive: ").append(ride.getArchive())
+                                    .append(" Correct: ").append(ride.getCorrect())
                                     .append("\n");
                         }
 

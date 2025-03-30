@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshare.Model.Ride;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -187,9 +189,11 @@ public class HomeActivity extends AppCompatActivity {
                             String date = rideObject.getString("date");
                             int initialCounter = rideObject.getInt("initial_counter");
                             int finalCounter = rideObject.getInt("final_counter");
-                            int userId = rideObject.getInt("user_id"); // Pobranie user_id
+                            int userId = rideObject.getInt("user_id");
+                            int archive = rideObject.getInt("archive");
+                            int correct = rideObject.getInt("correct");
 
-                            Ride ride = new Ride(id, date, initialCounter, finalCounter, userId);
+                            Ride ride = new Ride(id, date, initialCounter, finalCounter, userId, archive, correct);
                             ridesList.add(ride);
 
                             // Znajdujemy przejazd z najwyższym ID
@@ -212,7 +216,7 @@ public class HomeActivity extends AppCompatActivity {
                         //StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
                         StringBuilder ridesText = new StringBuilder();
                         for (Ride ride : ridesList) {
-                            if (ride.getUserId() == currentUserId) {
+                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0) {
                                 totalDistance += ride.getDistance();
 //                                ridesText.append("ID: ").append(ride.getId())
 //                                        .append(", Data: ").append(ride.getDate())
@@ -227,7 +231,7 @@ public class HomeActivity extends AppCompatActivity {
                         // Obliczenie kwoty do zaplaty
                         StringBuilder paymentText = new StringBuilder();
                         double fuelPrice = 3;
-                        double petrolConsumption = 9;
+                        double petrolConsumption = 10;
                         double totalCost = ((petrolConsumption * totalDistance)/100)*fuelPrice;
                         paymentText.append("Do zapłaty: ").append(totalCost).append(" zł");
                         textViewPaymentById.setText(paymentText);
