@@ -1,12 +1,15 @@
 package com.example.carshare;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.example.carshare.Model.Ride;
 
 public class AddRideActivity extends AppCompatActivity {
 
@@ -45,7 +50,6 @@ public class AddRideActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(new Date());
         editTextDate.setText(currentDate); // Ustawienie daty w polu EditText
-
 
 
         Intent intent = getIntent();
@@ -140,13 +144,12 @@ public class AddRideActivity extends AppCompatActivity {
             }
         }
 
+
         @Override
         protected void onPostExecute(String result) {
             if (result.equals("success")) {
-                Toast.makeText(AddRideActivity.this, "Przejazd dodany!", Toast.LENGTH_SHORT).show();
 
-                //Intent intent = new Intent(AddRideActivity.this, HomeActivity.class);
-                //startActivity(intent);  // Rozpoczyna HomeActivity
+                Toast.makeText(AddRideActivity.this, "Przejazd dodany!", Toast.LENGTH_LONG).show();
 
 
                 finish();

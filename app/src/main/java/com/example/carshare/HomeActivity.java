@@ -1,5 +1,6 @@
 package com.example.carshare;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,9 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carshare.Model.Ride;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,9 +33,10 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewTotalRidesById; // Pole do wyświetlania przejazdow uzytkowika
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
     private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
+
+    private Button buttonAdmin;
     private Ride lastRide;
     private int currentUserId;
-
 
 
     @Override
@@ -48,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         textViewPaymentById = findViewById(R.id.textViewPaymentById);
 
 
-
         // Odbieramy token przekazany z innego ekranu (np. logowania)
         String token = getIntent().getStringExtra("token");
 
@@ -60,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
+
 // wyswietlanie username
 
         textViewUserInfo = findViewById(R.id.textViewUserInfo); // Inicjalizacja TextView
@@ -67,7 +71,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Pobieramy user_id z zamiaru aktualnego użytkownika
         currentUserId = Integer.parseInt(getIntent().getStringExtra("userId"));
-
 
         if (username != null) {
             // Wyświetlamy login w odpowiednim TextView
@@ -106,14 +109,24 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, RideActivity.class);
                 intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
                 startActivity(intent);
             }
         });
 
+        //przekierowanie dla button Admin
+        Button buttonAdmin = findViewById(R.id.buttonAdmin);
+        buttonAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AdminActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                startActivity(intent);
+            }
+        });
+
+
     }
-
-
-
 
 
     // AUTOMATYCZNE ODŚWIEŻANIE DANYCH PO POWROCIE DO AKTYWNOŚCI
@@ -132,12 +145,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-
     // Klasa do pobierania danych o przejazdach w tle
     private class RidesDataTask extends AsyncTask<String, Void, String> {
-
-
 
 
         @Override
@@ -232,7 +241,8 @@ public class HomeActivity extends AppCompatActivity {
                         StringBuilder paymentText = new StringBuilder();
                         double fuelPrice = 3;
                         double petrolConsumption = 10;
-                        double totalCost = ((petrolConsumption * totalDistance)/100)*fuelPrice;
+                        double totalCost = ((petrolConsumption * totalDistance) / 100) * fuelPrice;
+                        totalCost =  Math.round(totalCost * 100.0) / 100.0;
                         paymentText.append("Do zapłaty: ").append(totalCost).append(" zł");
                         textViewPaymentById.setText(paymentText);
 

@@ -52,4 +52,12 @@ public class Ride {
     public int getDistance() {
         return finalCounter - initialCounter;
     }
+
+    public double getTotalCost(){
+        double fuelPrice = 3;
+        double petrolConsumption = 10;
+        double totalCost = ((petrolConsumption * getDistance()) / 100) * fuelPrice;
+        return Math.round(totalCost * 100.0) / 100.0;  // Zaokrąglenie do 2 miejsc po przecinku
+
+    }
 }

@@ -23,29 +23,25 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class RideActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity {
 
     private TextView textViewRides;   // Pole do wyświetlania listy przejazdów
-    private int currentUserId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ride);
+        setContentView(R.layout.activity_admin);
 
-        // Inicjalizacja pola tekstowego dla przejazdów
-        textViewRides = findViewById(R.id.textViewUsers);
+        textViewRides = findViewById(R.id.textViewUsers); // Inicjalizacja pola tekstowego dla przejazdów
 
-
-        // Odbieramy token przekazany z HomeActivity
+        // Odbieramy token przekazany z innego ekranu (np. logowania)
         String token = getIntent().getStringExtra("token");
-        currentUserId = getIntent().getIntExtra("userId", -1);
-        Toast.makeText(this, "User ID: " + currentUserId, Toast.LENGTH_LONG).show();
 
 
         if (token != null) {
             // Pobieramy listę przejazdów, przekazując token
-            new RideActivity.RidesDataTask().execute(token);
+            new AdminActivity.RidesDataTask().execute(token);
         } else {
             Toast.makeText(this, "No token found", Toast.LENGTH_SHORT).show();
         }
@@ -98,6 +94,10 @@ public class RideActivity extends AppCompatActivity {
                         Ride lastRide = null; // Przechowujemy ostatni przejazd (najwyższe ID)
 
 
+                        // Pobieramy user_id z zamiaru aktualnego użytkownika
+                        //int currentUserId = Integer.parseInt(getIntent().getStringExtra("userId"));
+
+
                         for (int i = 0; i < ridesArray.length(); i++) {
                             JSONObject rideObject = ridesArray.getJSONObject(i);
 
@@ -126,17 +126,16 @@ public class RideActivity extends AppCompatActivity {
                         int totalDistance = 0;
                         StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
                         for (Ride ride : ridesList) {
-                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0) {
-                                totalDistance += ride.getDistance();
-                                ridesText.append("").append(ride.getId())
-                                        .append(", Data: ").append(ride.getDate())
-                                        .append(", Km: ").append(ride.getDistance())
-                                        //.append(", User ID: ").append(ride.getUserId())
-//                                        .append(" A: ").append(ride.getArchive())
-//                                        .append(" C: ").append(ride.getCorrect())
-                                        .append(" Koszt: ").append(ride.getTotalCost()).append(" zł")
-                                        .append("\n");
-                            }
+
+                            totalDistance += ride.getDistance();
+                            ridesText.append("ID: ").append(ride.getId())
+                                    .append(", Data: ").append(ride.getDate())
+                                    .append(", Km: ").append(ride.getDistance())
+                                    .append(", User ID: ").append(ride.getUserId())
+                                    .append(" Archive: ").append(ride.getArchive())
+                                    .append(" Correct: ").append(ride.getCorrect())
+                                    .append("\n");
+
                         }
 
                         ridesText.append("\nŁączny przebyty dystans: ").append(totalDistance).append(" km");

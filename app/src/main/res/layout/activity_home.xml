@@ -47,7 +47,7 @@
             android:layout_rowWeight="1"
             android:textSize="12sp"
             android:drawableTop="@android:drawable/ic_input_add"
-            android:backgroundTint="#ACCEE9"
+            android:backgroundTint="#85c1e9"
             android:text="Dodaj przejazd" />
 
         <!-- Drugi kwadrat -->
@@ -71,7 +71,7 @@
             android:layout_rowWeight="1"
             android:textSize="12sp"
             android:drawableTop="@android:drawable/ic_lock_idle_charging"
-            android:backgroundTint="#ACCEE9"
+            android:backgroundTint="#85c1e9"
             android:text="Tankowanie" />
 
         <!-- Czwarty kwadrat -->
@@ -94,7 +94,7 @@
             android:layout_rowWeight="1"
             android:textSize="12sp"
             android:drawableTop="@android:drawable/ic_menu_sort_by_size"
-            android:backgroundTint="#ACCEE9"
+            android:backgroundTint="#85c1e9"
             android:text="Statystyki" />
 
         <!-- Szósty kwadrat -->
@@ -121,7 +121,7 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
         android:padding="12dp"
-        android:backgroundTint="#ACCEE9">
+        android:backgroundTint="#85c1e9">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -169,6 +169,13 @@
         android:layout_marginTop="140dp"
         android:text="Użytkownik: "
         android:textSize="16sp" />
+
+    <!-- przycisk zapłać -->
+    <Button
+        android:id="@+id/buttonAdmin"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:text="adm" />
 
 
 
