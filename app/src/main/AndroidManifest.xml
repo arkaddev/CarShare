@@ -46,6 +46,9 @@
         <activity android:name=".AdminPaymentActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
+        <activity android:name=".AddPaymentActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
 
     </application>
 </manifest>

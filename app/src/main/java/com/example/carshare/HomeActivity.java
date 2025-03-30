@@ -31,9 +31,12 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
     private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
 
-    private Button buttonAdminRides, buttonAdminPayments;
+    private Button buttonAdminRides, buttonAdminPayments, buttonPay;
     private Ride lastRide;
     private int currentUserId;
+
+    private double totalCost;
+    private int totalDistance;
 
 
     @Override
@@ -119,6 +122,20 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
                 intent.putExtra("token", token);  // Przekazujemy token
                 intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
+
+        //przekierowanie dla buttona pay
+        buttonPay = findViewById(R.id.buttonPay);
+        buttonPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AddPaymentActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                intent.putExtra("totalDistance", totalDistance);
+                intent.putExtra("totalCost", totalCost);
                 startActivity(intent);
             }
         });
@@ -242,7 +259,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                         // Obliczanie całkowitej przejechanej odległości i przygotowanie tekstu do wyświetlenia
-                        int totalDistance = 0;
+                        totalDistance = 0;
                         //StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
                         StringBuilder ridesText = new StringBuilder();
                         for (Ride ride : ridesList) {
@@ -262,7 +279,7 @@ public class HomeActivity extends AppCompatActivity {
                         StringBuilder paymentText = new StringBuilder();
                         double fuelPrice = 3;
                         double petrolConsumption = 10;
-                        double totalCost = ((petrolConsumption * totalDistance) / 100) * fuelPrice;
+                        totalCost = ((petrolConsumption * totalDistance) / 100) * fuelPrice;
                         totalCost =  Math.round(totalCost * 100.0) / 100.0;
                         paymentText.append("Do zapłaty: ").append(totalCost).append(" zł");
                         textViewPaymentById.setText(paymentText);
