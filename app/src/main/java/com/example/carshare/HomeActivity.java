@@ -1,6 +1,5 @@
 package com.example.carshare;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,11 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carshare.Model.Ride;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
     private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
 
-    private Button buttonAdmin;
+    private Button buttonAdminRides;
     private Ride lastRide;
     private int currentUserId;
 
@@ -114,12 +111,26 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //przekierowanie dla button Admin
-        Button buttonAdmin = findViewById(R.id.buttonAdmin);
-        buttonAdmin.setOnClickListener(new View.OnClickListener() {
+        //przekierowanie dla buttona nr 4
+        Button button4 = findViewById(R.id.button4);
+        button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AdminActivity.class);
+                Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
+
+
+
+        //przekierowanie dla button Admin
+        buttonAdminRides = findViewById(R.id.buttonAdminRides);
+        buttonAdminRides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AdminActivityRide.class);
                 intent.putExtra("token", token);  // Przekazujemy token
                 startActivity(intent);
             }

@@ -35,8 +35,13 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
 
-        <activity android:name=".AdminActivity"
+        <activity android:name=".AdminActivityRide"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
+
+        <activity android:name=".PaymentActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
+
     </application>
 </manifest>

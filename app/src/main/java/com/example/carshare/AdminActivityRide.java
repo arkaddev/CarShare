@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivityRide extends AppCompatActivity {
 
     private TextView textViewRides;   // Pole do wyświetlania listy przejazdów
 
@@ -31,7 +31,7 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_admin_ride);
 
         textViewRides = findViewById(R.id.textViewUsers); // Inicjalizacja pola tekstowego dla przejazdów
 
@@ -41,7 +41,7 @@ public class AdminActivity extends AppCompatActivity {
 
         if (token != null) {
             // Pobieramy listę przejazdów, przekazując token
-            new AdminActivity.RidesDataTask().execute(token);
+            new AdminActivityRide.RidesDataTask().execute(token);
         } else {
             Toast.makeText(this, "No token found", Toast.LENGTH_SHORT).show();
         }
