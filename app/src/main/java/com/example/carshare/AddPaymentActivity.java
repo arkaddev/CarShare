@@ -62,7 +62,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         totalCost = intent.getDoubleExtra("totalCost", -1);
         filteredRideIds = intent.getIntegerArrayListExtra("filteredRideIds");
 
-        //Toast.makeText(AddPaymentActivity.this, "Płatność dodana!" + filteredRideIds, Toast.LENGTH_LONG).show();
+        //Toast.makeText(AddPaymentActivity.this, "Lista ID: " + filteredRideIds, Toast.LENGTH_LONG).show();
 
         editTextTotalDistance.setText(String.valueOf(totalDistance));
         editTextTotalCost.setText(String.valueOf(totalCost));
@@ -159,11 +159,20 @@ public class AddPaymentActivity extends AppCompatActivity {
 
     // AsyncTask do aktualizacji przejazdów (archiwizacja)
     private class UpdateRidesTask extends AsyncTask<ArrayList<Integer>, Void, String> {
+
+
+
+
+
+
+
+
         @Override
         protected String doInBackground(ArrayList<Integer>... params) {
             ArrayList<Integer> rideIds = params[0];
+            boolean allSuccess = true; // Flaga określająca, czy wszystkie operacje się powiodły
 
-            for (int rideId : rideIds) {  // Iterujemy po każdym ID i wysyłamy osobne żądanie PUT
+            for (int rideId : rideIds) {
                 try {
                     URL url = new URL("http://tankujemy.online/rides.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -183,20 +192,29 @@ public class AddPaymentActivity extends AppCompatActivity {
 
                     int responseCode = connection.getResponseCode();
 
-                    if (responseCode == 200 || responseCode == 201) {
-                        connection.disconnect();
-                        return "success";
+                    if (responseCode != 200 && responseCode != 201) {
+                        allSuccess = false; // Jeśli którykolwiek żądanie się nie powiedzie, ustaw flagę na false
                     }
 
+                    connection.disconnect();
+
                 } catch (Exception e) {
-                    Log.e("UpdateRidesTask", "Error archiwizowania przejazdów", e);  // Logowanie błędu
+                    Log.e("UpdateRidesTask", "Error archiwizowania przejazdów", e);
                     e.printStackTrace();
+                    allSuccess = false; // Jeśli wystąpi wyjątek, oznacz jako błąd
                 }
             }
 
-            // Jeśli żaden warunek nie został spełniony, zwróć "error"
-            return "error";
+            return allSuccess ? "success" : "error"; // Zwracamy sukces tylko, jeśli wszystkie żądania się powiodły
         }
+
+
+
+
+
+
+
+
 
         @Override
         protected void onPostExecute(String result) {
