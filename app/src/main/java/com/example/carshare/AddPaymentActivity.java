@@ -125,7 +125,9 @@ public class AddPaymentActivity extends AppCompatActivity {
                 os.close();
 
                 int responseCode = connection.getResponseCode();
-                Log.d("AddPaymentTask", "Response Code: " + responseCode);  // Dodaj logowanie kodu odpowiedzi
+
+                // Dodaj logowanie kodu odpowiedzi
+                Log.d("AddPaymentTask", "Response Code: " + responseCode);
 
                 if (responseCode == 200 || responseCode == 201) {
                     return "success";
@@ -159,12 +161,6 @@ public class AddPaymentActivity extends AppCompatActivity {
 
     // AsyncTask do aktualizacji przejazdów (archiwizacja)
     private class UpdateRidesTask extends AsyncTask<ArrayList<Integer>, Void, String> {
-
-
-
-
-
-
 
 
         @Override

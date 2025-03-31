@@ -40,7 +40,7 @@ public class RideActivity extends AppCompatActivity {
         // Odbieramy token przekazany z HomeActivity
         String token = getIntent().getStringExtra("token");
         currentUserId = getIntent().getIntExtra("userId", -1);
-        Toast.makeText(this, "User ID: " + currentUserId, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "User ID: " + currentUserId, Toast.LENGTH_LONG).show();
 
 
         if (token != null) {
@@ -123,21 +123,39 @@ public class RideActivity extends AppCompatActivity {
 
 
                         // Obliczanie całkowitej przejechanej odległości i przygotowanie tekstu do wyświetlenia
+//                        int totalDistance = 0;
+//                        StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
+//                        for (Ride ride : ridesList) {
+//                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0) {
+//                                totalDistance += ride.getDistance();
+//                                ridesText.append("").append(ride.getId())
+//                                        .append(", Data: ").append(ride.getDate())
+//                                        .append(", Km: ").append(ride.getDistance())
+//                                        //.append(", User ID: ").append(ride.getUserId())
+////                                        .append(" A: ").append(ride.getArchive())
+////                                        .append(" C: ").append(ride.getCorrect())
+//                                        .append(" Koszt: ").append(ride.getTotalCost()).append(" zł")
+//                                        .append("\n");
+//                            }
+//                        }
+
                         int totalDistance = 0;
-                        StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
+                        StringBuilder ridesText = new StringBuilder();
+
+// Nagłówek tabeli
+                        ridesText.append(String.format("%-5s %-15s %-10s %-10s\n", "ID", "Data", "Km", "Koszt"));
+                        ridesText.append("———————————————————————————————————\n");
+
                         for (Ride ride : ridesList) {
                             if (ride.getUserId() == currentUserId && ride.getCorrect() == 0) {
                                 totalDistance += ride.getDistance();
-                                ridesText.append("").append(ride.getId())
-                                        .append(", Data: ").append(ride.getDate())
-                                        .append(", Km: ").append(ride.getDistance())
-                                        //.append(", User ID: ").append(ride.getUserId())
-//                                        .append(" A: ").append(ride.getArchive())
-//                                        .append(" C: ").append(ride.getCorrect())
-                                        .append(" Koszt: ").append(ride.getTotalCost()).append(" zł")
-                                        .append("\n");
+                                ridesText.append(String.format("%-5d %-15s %-10d %-10.2f\n",
+                                        ride.getId(), ride.getDate(), ride.getDistance(), ride.getTotalCost()));
                             }
                         }
+
+
+
 
                         ridesText.append("\nŁączny przebyty dystans: ").append(totalDistance).append(" km");
                         textViewRides.setText(ridesText.toString());
