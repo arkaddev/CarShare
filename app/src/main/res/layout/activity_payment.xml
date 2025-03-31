@@ -12,5 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Users will be displayed here"
-        android:textSize="12sp" />
+        android:textSize="14sp"
+
+        android:padding="8dp"
+        android:typeface="monospace"/>
+
+
+
 </LinearLayout>

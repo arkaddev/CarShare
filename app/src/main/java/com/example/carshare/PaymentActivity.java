@@ -27,6 +27,7 @@ import java.util.List;
 public class PaymentActivity extends AppCompatActivity {
 
     private TextView textViewPayments;   // Pole do wyświetlania platnosci
+    private int currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         // Odbieramy token przekazany z innego ekranu (np. logowania)
         String token = getIntent().getStringExtra("token");
-
+        currentUserId = getIntent().getIntExtra("userId", -1);
         if (token != null) {
             // Pobieramy listę przejazdów, przekazując token
             new PaymentActivity.PaymentsDataTask().execute(token);
@@ -111,14 +112,27 @@ public class PaymentActivity extends AppCompatActivity {
                         });
 
                         // Przygotowanie tekstu do wyświetlenia
-                        StringBuilder paymentText = new StringBuilder("Płatności:\n");
+//                        StringBuilder paymentText = new StringBuilder();
+//                        for (Payment payment : paymentList) {
+//                            if (payment.getUserId() == currentUserId){
+//                            paymentText.append("").append(payment.getId())
+//                                    .append(", Data: ").append(payment.getDate())
+//                                    .append(", Kwota: ").append(payment.getAmount()).append(" zł ")
+//                                    .append(", Km: ").append(payment.getDistance())
+//                                    .append(", User ID: ").append(payment.getUserId())
+//                                    .append("\n");
+//                        }
+//                    }
+
+                        StringBuilder paymentText = new StringBuilder();
+                        paymentText.append(String.format("%-5s %-15s %-10s %-10s\n", "ID", "Data", "Kwota", "Km")); // Nagłówki
+                        paymentText.append("———————————————————————————————————\n"); // Linia oddzielająca
+
                         for (Payment payment : paymentList) {
-                            paymentText.append("ID: ").append(payment.getId())
-                                    .append(", Data: ").append(payment.getDate())
-                                    .append(", Kwota: ").append(payment.getAmount())
-                                    .append(", Km: ").append(payment.getDistance())
-                                    .append(", User ID: ").append(payment.getUserId())
-                                    .append("\n");
+                            if (payment.getUserId() == currentUserId) {
+                                paymentText.append(String.format("%-5d %-15s %-10.2f %-10.2f\n",
+                                        payment.getId(), payment.getDate(), payment.getAmount(), payment.getDistance()));
+                            }
                         }
 
                         textViewPayments.setText(paymentText.toString());

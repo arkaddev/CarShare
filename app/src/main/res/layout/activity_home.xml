@@ -28,7 +28,7 @@
 
 
 
-    <!-- Siatka z 4 kwadratami -->
+    <!-- Siatka z 6 kwadratami -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,11 +155,55 @@
                 android:id="@+id/buttonPay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@android:drawable/ic_menu_upload"
                 android:text="Zapłać" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+
+
+
+
+    <!-- Siatka z 2 kwadratami -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_gravity="center"
+        android:padding="8dp">
+
+        <!-- Pierwszy kwadrat -->
+        <Button
+            android:id="@+id/buttdon1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:textSize="22sp"
+            android:backgroundTint="#34495e"
+            android:textColor="#FFFFFF"
+            android:text="Paliwo" />
+
+        <!-- Drugi kwadrat -->
+        <Button
+            android:id="@+id/butdton2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:textSize="22sp"
+            android:backgroundTint="#34495e"
+            android:textColor="#FFFFFF"
+            android:text="Portfel" />
+
+
+
+
+    </GridLayout>
+
 
 
     <!-- user info -->
@@ -172,7 +216,7 @@
         android:textSize="16sp" />
 
 
-    <!-- Siatka z 4 kwadratami -->
+    <!-- Siatka z kwadratami -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

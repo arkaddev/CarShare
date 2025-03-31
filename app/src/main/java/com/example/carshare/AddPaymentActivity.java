@@ -28,6 +28,7 @@ import com.example.carshare.Model.Ride;
 public class AddPaymentActivity extends AppCompatActivity {
 
     private EditText editTextDate, editTextTotalCost, editTextTotalDistance;
+
     private Button buttonSubmit;
     private String token;
     private int userId;

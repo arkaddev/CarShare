@@ -5,6 +5,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Data:"
+        android:textSize="14sp" />
+
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="match_parent"
@@ -12,6 +19,13 @@
         android:hint="Data (YYYY-MM-DD)"
         android:focusable="false"
         android:clickable="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Licznik początkowy:"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/editTextInitialCounter"
@@ -22,6 +36,13 @@
         android:focusable="false"
         android:clickable="false"
         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Licznik końcowy:"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/editTextFinalCounter"
@@ -35,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Dodaj przejazd"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#85c1e9"/>
 
     <Button
@@ -43,6 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Korekcja"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>
