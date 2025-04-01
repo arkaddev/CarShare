@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
     private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
 
-    private Button buttonAdminRides, buttonAdminPayments, buttonPay;
+    private Button buttonAdminRides, buttonAdminPayments, buttonAdminRefuelings, buttonPay;
     private Ride lastRide;
     private int currentUserId;
 
@@ -115,6 +115,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //przekierowanie dla buttona nr 3
+        Button button3 = findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, RefuelingActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
+
         //przekierowanie dla buttona nr 4
         Button button4 = findViewById(R.id.button4);
         button4.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //przekierowanie dla buttona nr 4
+        //przekierowanie dla buttona nr 5
         Button button5 = findViewById(R.id.button5);
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +186,17 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, AdminPaymentActivity.class);
                 intent.putExtra("token", token);  // Przekazujemy token
                  startActivity(intent);
+            }
+        });
+
+        //przekierowanie dla buttona Admin Refuelings
+        buttonAdminRefuelings = findViewById(R.id.buttonAdminRefuelings);
+        buttonAdminRefuelings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AdminRefuelingActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                startActivity(intent);
             }
         });
 

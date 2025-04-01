@@ -55,5 +55,13 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
 
+        <activity android:name=".RefuelingActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
+
+        <activity android:name=".AdminRefuelingActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
+
     </application>
 </manifest>
