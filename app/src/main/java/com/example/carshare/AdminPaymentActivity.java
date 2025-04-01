@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AdminPaymentActivity extends AppCompatActivity {
@@ -98,6 +100,14 @@ public class AdminPaymentActivity extends AppCompatActivity {
                             Payment payment = new Payment(id, amount, distance, date, userId);
                             paymentList.add(payment);  // Dodajemy do listy
                         }
+
+                        // Sortowanie listy według ID w kolejności malejącej
+                        Collections.sort(paymentList, new Comparator<Payment>() {
+                            @Override
+                            public int compare(Payment r1, Payment r2) {
+                                return Integer.compare(r2.getId(), r1.getId()); // Sortowanie malejące
+                            }
+                        });
 
                         // Przygotowanie tekstu do wyświetlenia
                         StringBuilder paymentText = new StringBuilder("Płatności:\n");

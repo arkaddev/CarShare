@@ -88,6 +88,7 @@
 
         <!-- Piąty kwadrat -->
         <Button
+            android:id="@+id/button5"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_margin="2dp"

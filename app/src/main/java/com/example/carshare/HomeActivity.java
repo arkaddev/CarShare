@@ -127,6 +127,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //przekierowanie dla buttona nr 4
+        Button button5 = findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, StatisticActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
+
         //przekierowanie dla buttona pay
         buttonPay = findViewById(R.id.buttonPay);
         buttonPay.setOnClickListener(new View.OnClickListener() {
