@@ -170,7 +170,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="Użytkownik: "
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
 
     <!-- Siatka z kwadratami admin -->
@@ -180,7 +181,8 @@
         android:columnCount="3"
         android:rowCount="2"
         android:layout_gravity="center"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:visibility="gone">
         <!-- przycisk admin historia przejazdow -->
         <Button
             android:id="@+id/buttonAdminRides"
