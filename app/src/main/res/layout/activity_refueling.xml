@@ -11,6 +11,12 @@
         android:gravity="center"
         android:padding="2dp">
 
+        <Button
+            android:id="@+id/buttonAddRefueling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dodaj tankowanie" />
+
         <TextView
             android:id="@+id/textViewRefuelings"
             android:layout_width="match_parent"

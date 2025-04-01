@@ -1,0 +1,87 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Data:"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Data (YYYY-MM-DD)"
+        android:focusable="false"
+        android:clickable="false" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Rodzaj Paliwa:"
+        android:textSize="14sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_petrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benzyna" />
+
+        <RadioButton
+            android:id="@+id/radio_lpg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LPG" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Cena za litr:"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editTextPricePerLiter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cena za litr"
+        android:inputType="numberDecimal"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Zapłacona kwota:"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editTextAmountRefueling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Zapłacona kwota"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj tankowanie"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#85c1e9"/>
+
+
+</LinearLayout>

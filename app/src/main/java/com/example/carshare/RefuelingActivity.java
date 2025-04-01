@@ -1,8 +1,11 @@
 package com.example.carshare;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import java.util.List;
 public class RefuelingActivity extends AppCompatActivity {
 
     private TextView textViewRefuelings;
+    private TextView buttonAddRefueling;
     private int currentUserId;
 
     @Override
@@ -51,6 +55,21 @@ public class RefuelingActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No token found", Toast.LENGTH_SHORT).show();
         }
+
+
+        //przekierowanie dla buttona nr 1
+        buttonAddRefueling = findViewById(R.id.buttonAddRefueling);
+        buttonAddRefueling.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RefuelingActivity.this, AddRefuelingActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
+
 
     }
 
