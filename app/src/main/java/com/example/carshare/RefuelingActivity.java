@@ -124,20 +124,43 @@ public class RefuelingActivity extends AppCompatActivity {
 
                         // Obliczanie całkowitej przejechanej odległości i przygotowanie tekstu do wyświetlenia
 
-                        StringBuilder refuelingText = new StringBuilder("Tankowania:\n");
+//                        StringBuilder refuelingText = new StringBuilder("Tankowania:\n");
+//                        for (Refueling refueling : refuelingList) {
+//
+//
+//                            refuelingText.append("ID: ").append(refueling.getId())
+//                                    .append(", Data: ").append(refueling.getDateRefueling())
+//                                    .append(", Cena za l: ").append(refueling.getPricePerLiter())
+//                                    .append(", Zapłacono: ").append(refueling.getAmountRefueling())
+//                                    .append(" User: ").append(refueling.getUserId())
+//                                    .append("\n");
+//
+//                        }
+
+
+                        // z userId
+
+                        StringBuilder refuelingText = new StringBuilder();
+                        refuelingText.append(String.format("%-5s %-15s %-12s %-12s %-8s\n", "ID", "Data", "Cena za l", "Zapłacono", "User")); // Nagłówki
+                        refuelingText.append("——————————————————————————————————————————————————\n"); // Linia oddzielająca
+
                         for (Refueling refueling : refuelingList) {
-
-
-                            refuelingText.append("ID: ").append(refueling.getId())
-                                    .append(", Data: ").append(refueling.getDateRefueling())
-                                    .append(", Cena za l: ").append(refueling.getPricePerLiter())
-                                    .append(", Zapłacono: ").append(refueling.getAmountRefueling())
-                                    .append(" User: ").append(refueling.getUserId())
-                                    .append("\n");
-
+                            refuelingText.append(String.format("%-5d %-15s %-12.2f %-12.2f %-8d\n",
+                                    refueling.getId(), refueling.getDateRefueling(), refueling.getPricePerLiter(), refueling.getAmountRefueling(), refueling.getUserId()));
                         }
 
-                          textViewRefuelings.setText(refuelingText.toString());
+// bez userId
+
+//                        StringBuilder refuelingText = new StringBuilder();
+//                        refuelingText.append(String.format("%-5s %-15s %-12s %-12s\n", "ID", "Data", "Cena za l", "Zapłacono")); // Nagłówki
+//                        refuelingText.append("—————————————————————————————————————————————\n"); // Linia oddzielająca
+//
+//                        for (Refueling refueling : refuelingList) {
+//                            refuelingText.append(String.format("%-5d %-15s %-12.2f %-12.2f\n",
+//                                    refueling.getId(), refueling.getDateRefueling(), refueling.getPricePerLiter(), refueling.getAmountRefueling()));
+//                        }
+
+                        textViewRefuelings.setText(refuelingText.toString());
                     } else {
 
                         textViewRefuelings.setText("Brak tankowań do wyświetlenia.");

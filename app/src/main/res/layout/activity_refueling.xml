@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Refuelings will be displayed here"
-            android:textSize="10sp"
+            android:text="Tankowania zostaną wyświetlone"
+            android:textSize="12sp"
 
             android:padding="2dp"
             android:typeface="monospace"/>
