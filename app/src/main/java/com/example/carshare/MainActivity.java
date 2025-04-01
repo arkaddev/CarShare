@@ -19,12 +19,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextUsername, editTextPassword;
     private Button buttonLogin;
     private TextView textViewMessage;
+    private TextView textViewMain;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,30 @@ public class MainActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewMessage = findViewById(R.id.textViewMessage);
+
+       //poczatek walidacji terminu
+
+
+        textViewMain = findViewById(R.id.textViewMain);
+
+        textViewMain.setText("Apka ważna do: 01.05.2025");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateStr = dateFormat.format(new Date());
+
+        try {
+            Date currentDate = dateFormat.parse(currentDateStr);
+            Date expirationDate = dateFormat.parse("2025-05-01");
+
+            if (currentDate != null && expirationDate != null && currentDate.after(expirationDate)) {
+                editTextUsername.setVisibility(View.GONE);
+                editTextPassword.setVisibility(View.GONE);
+                buttonLogin.setVisibility(View.GONE);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+//koniec walidacji terminu
+
 
         buttonLogin.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString();
@@ -106,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("userId", userId);  // Przekazujemy id użytkownika
                         startActivity(intent);
                         finish();  // Zakończenie bieżącej aktywności
-
 
 
                         Toast.makeText(MainActivity.this, "Zalogowano", Toast.LENGTH_SHORT).show();

@@ -6,6 +6,14 @@
     android:gravity="center"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/textViewMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Witaj"
+        android:textSize="18sp"
+        android:padding="6dp"
+        android:textColor="@android:color/holo_red_dark"/>
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"

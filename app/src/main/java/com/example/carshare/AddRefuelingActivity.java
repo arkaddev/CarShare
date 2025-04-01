@@ -72,26 +72,7 @@ public class AddRefuelingActivity extends AppCompatActivity {
             Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show();
             return;
         }
-/*
-        // zamiana String na int
-        int initial = Integer.parseInt(initialCounter);
-        int finalVal = Integer.parseInt(finalCounter);
 
-        if (initial > finalVal) {
-            Toast.makeText(this, "Stan licznika za niski.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (finalVal - initial > 500) {
-            Toast.makeText(this, "Różnica między stanem licznika zbyt duża.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Sprawdzenie, czy finalVal ma 6 cyfr
-//        if (finalVal < 100000 || finalVal > 999999) {
-//            Toast.makeText(this, "Numer końcowy musi mieć 6 cyfr.", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-*/
         new AddRefuelingTask().execute(date, pricePerLiter, amountRefueling);
     }
 
