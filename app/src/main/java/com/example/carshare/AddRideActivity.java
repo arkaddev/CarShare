@@ -125,9 +125,11 @@ public class AddRideActivity extends AppCompatActivity {
             String initialCounter = params[1];
             String finalCounter = params[2];
 
+            HttpURLConnection connection = null;
+
             try {
                 URL url = new URL("http://tankujemy.online/rides.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Authorization", "Bearer " + token);
                 connection.setRequestProperty("Content-Type", "application/json");
@@ -149,6 +151,8 @@ public class AddRideActivity extends AppCompatActivity {
                 int responseCode = connection.getResponseCode();
                 Log.d("AddRideTask", "Response Code: " + responseCode);  // Dodaj logowanie kodu odpowiedzi
 
+                connection.disconnect();
+
                 if (responseCode == 200 || responseCode == 201) {
                     return "success";
                 } else {
@@ -160,6 +164,12 @@ public class AddRideActivity extends AppCompatActivity {
 
                 e.printStackTrace();
                 return "error";
+            }
+            finally {
+                // Wykonanie disconnect w bloku finally, aby upewnić się, że połączenie zostanie zamknięte
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
         }
 

@@ -245,6 +245,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 Log.d("RidesDataTask", "Response: " + response.toString()); // Logowanie odpowiedzi dla debugowania
 
+                connection.disconnect();
+
                 return response.toString();
             } catch (Exception e) {
                 e.printStackTrace();

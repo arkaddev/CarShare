@@ -74,6 +74,8 @@ public class AdminActivityRide extends AppCompatActivity {
 
                 Log.d("RidesDataTask", "Response: " + response.toString()); // Logowanie odpowiedzi dla debugowania
 
+                connection.disconnect();
+
                 return response.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -93,9 +95,6 @@ public class AdminActivityRide extends AppCompatActivity {
 
                         Ride lastRide = null; // Przechowujemy ostatni przejazd (najwyższe ID)
 
-
-                        // Pobieramy user_id z zamiaru aktualnego użytkownika
-                        //int currentUserId = Integer.parseInt(getIntent().getStringExtra("userId"));
 
 
                         for (int i = 0; i < ridesArray.length(); i++) {

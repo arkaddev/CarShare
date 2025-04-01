@@ -102,9 +102,11 @@ public class AddRefuelingActivity extends AppCompatActivity {
             String pricePerLiter = params[1];
             String amountRefueling = params[2];
 
+            HttpURLConnection connection = null;
+
             try {
                 URL url = new URL("http://tankujemy.online/refuelings.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Authorization", "Bearer " + token);
                 connection.setRequestProperty("Content-Type", "application/json");
@@ -125,17 +127,27 @@ public class AddRefuelingActivity extends AppCompatActivity {
                 int responseCode = connection.getResponseCode();
                 Log.d("AddRefuelingTask", "Response Code: " + responseCode);  // Dodaj logowanie kodu odpowiedzi
 
+                connection.disconnect();
+
                 if (responseCode == 200 || responseCode == 201) {
                     return "success";
                 } else {
                     return "error";
                 }
 
+
+
             } catch (Exception e) {
                 Log.e("AddRefuelingTask", "Error adding ride", e);  // Logowanie błędu
 
                 e.printStackTrace();
                 return "error";
+            }
+            finally {
+                // Wykonanie disconnect w bloku finally, aby upewnić się, że połączenie zostanie zamknięte
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
         }
 

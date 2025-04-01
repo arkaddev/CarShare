@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 in.close();
 
+                connection.disconnect();
+
                 return response.toString();
             } catch (Exception e) {
                 e.printStackTrace();

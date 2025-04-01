@@ -99,6 +99,8 @@ public class RefuelingActivity extends AppCompatActivity {
 
                 Log.d("RefuelingsDataTask", "Response: " + response.toString()); // Logowanie odpowiedzi dla debugowania
 
+                connection.disconnect();
+
                 return response.toString();
             } catch (Exception e) {
                 e.printStackTrace();

@@ -70,6 +70,8 @@ public class AdminPaymentActivity extends AppCompatActivity {
 
                 Log.d("PaymentsDataTask", "Response: " + response.toString()); // Logowanie odpowiedzi dla debugowania
 
+                connection.disconnect();
+
                 return response.toString();
             } catch (Exception e) {
                 e.printStackTrace();

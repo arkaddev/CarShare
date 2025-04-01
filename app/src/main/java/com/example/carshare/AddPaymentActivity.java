@@ -104,9 +104,11 @@ public class AddPaymentActivity extends AppCompatActivity {
             String amount = params[1];
             String distance = params[2];
 
+            HttpURLConnection connection = null;
+
             try {
                 URL url = new URL("http://tankujemy.online/payments.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Authorization", "Bearer " + token);
                 connection.setRequestProperty("Content-Type", "application/json");
@@ -129,6 +131,8 @@ public class AddPaymentActivity extends AppCompatActivity {
                 // Dodaj logowanie kodu odpowiedzi
                 Log.d("AddPaymentTask", "Response Code: " + responseCode);
 
+                connection.disconnect();
+
                 if (responseCode == 200 || responseCode == 201) {
                     return "success";
                 } else {
@@ -140,6 +144,12 @@ public class AddPaymentActivity extends AppCompatActivity {
 
                 e.printStackTrace();
                 return "error";
+            }
+            finally {
+                // Wykonanie disconnect w bloku finally, aby upewnić się, że połączenie zostanie zamknięte
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
         }
 
@@ -155,6 +165,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(AddPaymentActivity.this, "Błąd dodawania płatności.", Toast.LENGTH_SHORT).show();
             }
+
         }
 
     }
@@ -168,10 +179,12 @@ public class AddPaymentActivity extends AppCompatActivity {
             ArrayList<Integer> rideIds = params[0];
             boolean allSuccess = true; // Flaga określająca, czy wszystkie operacje się powiodły
 
+            HttpURLConnection connection = null;
+
             for (int rideId : rideIds) {
                 try {
                     URL url = new URL("http://tankujemy.online/rides.php");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("PUT");
                     connection.setRequestProperty("Authorization", "Bearer " + token);
                     connection.setRequestProperty("Content-Type", "application/json");
@@ -199,6 +212,14 @@ public class AddPaymentActivity extends AppCompatActivity {
                     e.printStackTrace();
                     allSuccess = false; // Jeśli wystąpi wyjątek, oznacz jako błąd
                 }
+
+                finally {
+                    // Wykonanie disconnect w bloku finally, aby upewnić się, że połączenie zostanie zamknięte
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                }
+
             }
 
             return allSuccess ? "success" : "error"; // Zwracamy sukces tylko, jeśli wszystkie żądania się powiodły
