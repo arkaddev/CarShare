@@ -19,33 +19,17 @@
         android:focusable="false"
         android:hint="Data (YYYY-MM-DD)" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Dystans (km):"
-        android:textSize="14sp" />
-    <EditText
-        android:id="@+id/editTextTotalDistance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Dystans"
-        android:inputType="number"
-        android:clickable="false"
-        android:focusable="false"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Koszt (zł):"
+        android:text="Wpłata (zł):"
         android:textSize="14sp" />
     <EditText
         android:id="@+id/editTextTotalCost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
         android:hint="Koszt"
         android:inputType="number" />
 

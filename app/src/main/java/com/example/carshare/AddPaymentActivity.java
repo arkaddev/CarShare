@@ -44,7 +44,6 @@ public class AddPaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_payment);
 
         editTextDate = findViewById(R.id.editTextDate);
-        editTextTotalDistance = findViewById(R.id.editTextTotalDistance);
         editTextTotalCost = findViewById(R.id.editTextTotalCost);
         buttonSubmit = findViewById(R.id.buttonSubmit);
 
@@ -58,14 +57,10 @@ public class AddPaymentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
         userId = intent.getIntExtra("userId", -1);
-        totalDistance = intent.getIntExtra("totalDistance", -1);
-        totalCost = intent.getDoubleExtra("totalCost", -1);
-        filteredRideIds = intent.getIntegerArrayListExtra("filteredRideIds");
+
 
         //Toast.makeText(AddPaymentActivity.this, "Lista ID: " + filteredRideIds, Toast.LENGTH_LONG).show();
 
-        editTextTotalDistance.setText(String.valueOf(totalDistance));
-        editTextTotalCost.setText(String.valueOf(totalCost));
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,22 +74,16 @@ public class AddPaymentActivity extends AppCompatActivity {
 
     private void submitRide() {
 
-        // Sprawdzenie, czy lista filteredRideIds jest pusta
-        if (filteredRideIds == null || filteredRideIds.isEmpty()) {
-            Toast.makeText(this, "Brak przejazdów do archiwizacji!", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         String date = editTextDate.getText().toString();
-        String totalDistanceString = editTextTotalDistance.getText().toString();
         String totalCostString = editTextTotalCost.getText().toString();
 
-        if (date.isEmpty() || totalCostString.isEmpty() || totalDistanceString.isEmpty()) {
+        if (date.isEmpty() || totalCostString.isEmpty()) {
             Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        new AddPaymentTask().execute(date, totalCostString, totalDistanceString);
+        new AddPaymentTask().execute(date, totalCostString);
     }
 
     private class AddPaymentTask extends AsyncTask<String, Void, String> {
@@ -102,7 +91,6 @@ public class AddPaymentActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             String date = params[0];
             String amount = params[1];
-            String distance = params[2];
 
             HttpURLConnection connection = null;
 
@@ -117,7 +105,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                 JSONObject postData = new JSONObject();
                 postData.put("date", date);
                 postData.put("amount", Double.parseDouble(amount));
-                postData.put("distance", Integer.parseInt(distance));
+                postData.put("distance", 0);
                 postData.put("userId", userId);
 
 
@@ -158,9 +146,8 @@ public class AddPaymentActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result.equals("success")) {
 
-                //Toast.makeText(AddPaymentActivity.this, "Płatność dodana!", Toast.LENGTH_LONG).show();
-                new UpdateRidesTask().execute(filteredRideIds);
-                //finish();
+                Toast.makeText(AddPaymentActivity.this, "Płatność dodana!", Toast.LENGTH_LONG).show();
+                finish();
 
             } else {
                 Toast.makeText(AddPaymentActivity.this, "Błąd dodawania płatności.", Toast.LENGTH_SHORT).show();

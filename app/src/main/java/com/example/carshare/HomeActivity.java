@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshare.Model.Payment;
 import com.example.carshare.Model.Ride;
 
 import org.json.JSONArray;
@@ -22,6 +23,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -31,13 +34,15 @@ public class HomeActivity extends AppCompatActivity {
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
     private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
 
-    private Button buttonAdminRides, buttonAdminPayments, buttonAdminRefuelings, buttonPay;
+    private Button buttonAdminRides, buttonAdminPayments, buttonAdminRefuelings;
     private Ride lastRide;
     private int currentUserId;
 
     private double totalCost;
     private int totalDistance;
     private List<Integer> filteredRideIds;
+    private TextView textViewAccountBalance;
+    private double totalAmount;
 
 
     @Override
@@ -52,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         textViewTotalRidesById = findViewById(R.id.textViewTotalRidesById);
         textViewPaymentById = findViewById(R.id.textViewPaymentById);
 
+        textViewAccountBalance = findViewById(R.id.textViewAccountBalance);
 
         // Odbieramy token przekazany z innego ekranu (np. logowania)
         String token = getIntent().getStringExtra("token");
@@ -59,10 +65,10 @@ public class HomeActivity extends AppCompatActivity {
         if (token != null) {
             // Pobieramy listę przejazdów, przekazując token
             new RidesDataTask().execute(token);
+            new PaymentsDataTask().execute(token);
         } else {
             Toast.makeText(this, "No token found", Toast.LENGTH_SHORT).show();
         }
-
 
 
 // wyswietlanie username
@@ -79,7 +85,6 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             textViewUserInfo.setText("Brak danych o użytkowniku.");
         }
-
 
 
 //przekierowanie dla buttona nr 1
@@ -151,22 +156,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //przekierowanie dla buttona pay
-        buttonPay = findViewById(R.id.buttonPay);
-        buttonPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AddPaymentActivity.class);
-                intent.putExtra("token", token);  // Przekazujemy token
-                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
-                intent.putExtra("totalDistance", totalDistance);
-                intent.putExtra("totalCost", totalCost);
-                intent.putExtra("filteredRideIds", new ArrayList<>(filteredRideIds));
-                startActivity(intent);
-            }
-        });
-
-
 
         //przekierowanie dla button Admin Ride
         buttonAdminRides = findViewById(R.id.buttonAdminRides);
@@ -185,7 +174,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, AdminPaymentActivity.class);
                 intent.putExtra("token", token);  // Przekazujemy token
-                 startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -302,7 +291,9 @@ public class HomeActivity extends AppCompatActivity {
                         //StringBuilder ridesText = new StringBuilder("Przejazdy:\n");
                         StringBuilder ridesText = new StringBuilder();
                         for (Ride ride : ridesList) {
-                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0 && ride.getArchive() == 0) {
+                            //if (ride.getUserId() == currentUserId && ride.getCorrect() == 0 && ride.getArchive() == 0) {
+                            if (ride.getUserId() == currentUserId && ride.getCorrect() == 0) {
+
                                 totalDistance += ride.getDistance();
                                 filteredRideIds.add(ride.getId()); // Dodajemy ID do listy
 //                                ridesText.append("ID: ").append(ride.getId())
@@ -321,7 +312,7 @@ public class HomeActivity extends AppCompatActivity {
                         double fuelPrice = 3;
                         double petrolConsumption = 10;
                         totalCost = ((petrolConsumption * totalDistance) / 100) * fuelPrice;
-                        totalCost =  Math.round(totalCost * 100.0) / 100.0;
+                        totalCost = Math.round(totalCost * 100.0) / 100.0;
                         paymentText.append("Do zapłaty: ").append(totalCost).append(" zł");
                         textViewPaymentById.setText(paymentText);
 
@@ -341,4 +332,94 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    // Klasa do pobierania danych o przejazdach w tle
+    private class PaymentsDataTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String token = params[0];
+
+            try {
+                // Tworzymy połączenie z API
+                URL url = new URL("http://tankujemy.online/payments.php"); // Adres API
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+
+                // Odczytujemy odpowiedź
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = in.readLine()) != null) {
+                    response.append(line);
+                }
+                in.close();
+
+                connection.disconnect();
+
+                return response.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                try {
+                    JSONObject response = new JSONObject(result);
+
+                    if (response.has("payments")) {
+                        JSONArray paymentsArray = response.getJSONArray("payments");
+                        List<Payment> paymentList = new ArrayList<>();
+
+                        // Iteracja po danych i dodanie do listy
+                        for (int i = 0; i < paymentsArray.length(); i++) {
+                            JSONObject rideObject = paymentsArray.getJSONObject(i);
+
+                            int id = rideObject.getInt("id");
+                            String date = rideObject.getString("date");
+                            double amount = rideObject.getDouble("amount");
+                            double distance = rideObject.getDouble("distance");
+                            int userId = rideObject.getInt("userId");
+
+                            Payment payment = new Payment(id, amount, distance, date, userId);
+                            paymentList.add(payment);  // Dodajemy do listy
+                        }
+
+                        // Inicjalizacja zmiennej do sumowania kwot
+                        totalAmount = 0.0;
+
+                        // Przygotowanie tekstu do wyświetlenia
+                        StringBuilder paymentText = new StringBuilder();
+                        for (Payment payment : paymentList) {
+                            if (payment.getUserId() == currentUserId) {
+                                // Sumowanie kwot
+                                totalAmount += payment.getAmount();
+                            }
+                        }
+
+                        double accountBalance = totalAmount - totalCost;
+                          accountBalance = Math.round(accountBalance * 100.0) / 100.0;
+                        paymentText.append("\nStan konta: ").append(accountBalance).append(" zł");
+                        textViewAccountBalance.setText(paymentText.toString());
+
+                    } else {
+                        textViewAccountBalance.setText("Brak płatności do wyświetlenia.");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    textViewAccountBalance.setText("Błąd podczas przetwarzania danych.");
+                }
+            } else {
+                textViewAccountBalance.setText("Nie udało się pobrać danych o płatnościach.");
+            }
+        }
+    }
+
+
 }

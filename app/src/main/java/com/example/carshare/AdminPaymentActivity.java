@@ -111,9 +111,16 @@ public class AdminPaymentActivity extends AppCompatActivity {
                             }
                         });
 
+                        // Inicjalizacja zmiennej do sumowania kwot
+                        double totalAmount = 0.0;
+
                         // Przygotowanie tekstu do wyświetlenia
                         StringBuilder paymentText = new StringBuilder("Płatności:\n");
                         for (Payment payment : paymentList) {
+
+                            // Sumowanie kwot
+                            totalAmount += payment.getAmount();
+
                             paymentText.append("ID: ").append(payment.getId())
                                     .append(", Data: ").append(payment.getDate())
                                     .append(", Kwota: ").append(payment.getAmount())
@@ -122,6 +129,7 @@ public class AdminPaymentActivity extends AppCompatActivity {
                                     .append("\n");
                         }
 
+                        paymentText.append("\nŁączne wpłaty: ").append(totalAmount).append(" zł");
                         textViewPayments.setText(paymentText.toString());
                     } else {
                         textViewPayments.setText("Brak płatności do wyświetlenia.");

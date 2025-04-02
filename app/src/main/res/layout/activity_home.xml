@@ -152,12 +152,15 @@
                 android:textSize="18sp"
                 android:padding="6dp"/>
 
-            <!-- przycisk zapłać -->
-            <Button
-                android:id="@+id/buttonPay"
-                android:layout_width="match_parent"
+            <!-- Info o stanie konta -->
+            <TextView
+                android:id="@+id/textViewAccountBalance"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zapłać" />
+                android:text="Stan konta: "
+                android:textSize="18sp"
+                android:padding="6dp"/>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -181,8 +184,7 @@
         android:columnCount="3"
         android:rowCount="2"
         android:layout_gravity="center"
-        android:padding="8dp"
-        android:visibility="gone">
+        android:padding="8dp">
         <!-- przycisk admin historia przejazdow -->
         <Button
             android:id="@+id/buttonAdminRides"

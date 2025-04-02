@@ -1,8 +1,11 @@
 package com.example.carshare;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ public class PaymentActivity extends AppCompatActivity {
     private TextView textViewPayments;   // Pole do wyświetlania platnosci
     private int currentUserId;
 
+    private Button buttonPay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,21 @@ public class PaymentActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No token found", Toast.LENGTH_SHORT).show();
         }
+
+
+
+
+        //przekierowanie dla buttona pay
+        buttonPay = findViewById(R.id.buttonPay);
+        buttonPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PaymentActivity.this, AddPaymentActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
     }
 
     // Klasa do pobierania danych o przejazdach w tle
@@ -127,13 +147,13 @@ public class PaymentActivity extends AppCompatActivity {
 //                    }
 
                         StringBuilder paymentText = new StringBuilder();
-                        paymentText.append(String.format("%-5s %-15s %-10s %-10s\n", "ID", "Data", "Kwota", "Km")); // Nagłówki
-                        paymentText.append("———————————————————————————————————\n"); // Linia oddzielająca
+                        paymentText.append(String.format("%-5s %-15s %-10s\n", "ID", "Data", "Kwota")); // Nagłówki
+                        paymentText.append("———————————————————————————\n"); // Linia oddzielająca
 
                         for (Payment payment : paymentList) {
                             if (payment.getUserId() == currentUserId) {
-                                paymentText.append(String.format("%-5d %-15s %-10.2f %-10.2f\n",
-                                        payment.getId(), payment.getDate(), payment.getAmount(), payment.getDistance()));
+                                paymentText.append(String.format("%-5d %-15s %-10.2f\n",
+                                        payment.getId(), payment.getDate(), payment.getAmount()));
                             }
                         }
 
