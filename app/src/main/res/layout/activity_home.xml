@@ -118,13 +118,14 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewAccountBalance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
         android:padding="12dp"
-        android:backgroundTint="#85c1e9">
+        android:backgroundTint="#82e0aa">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,22 +135,12 @@
             android:gravity="center_horizontal">
 
 
-            <!-- Info o przejechanych kilometrach -->
             <TextView
-                android:id="@+id/textViewTotalRidesById"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Twoja podróż: -- km"
-                android:textSize="18sp"
-                android:padding="6dp"/>
 
-            <!-- Info o platnosciach za przejazd -->
-            <TextView
-                android:id="@+id/textViewPaymentById"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Płatność: "
-                android:textSize="18sp"
+                android:text="TWÓJ PORTFEL "
+                android:textSize="14sp"
                 android:padding="6dp"/>
 
             <!-- Info o stanie konta -->
@@ -158,7 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stan konta: "
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:padding="6dp"/>
 
 

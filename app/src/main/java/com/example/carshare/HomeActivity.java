@@ -1,6 +1,8 @@
 package com.example.carshare;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.carshare.Model.Payment;
 import com.example.carshare.Model.Ride;
@@ -30,9 +33,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView textViewCounter; // Pole do wyświetlania aktualnego stanu licznika
-    private TextView textViewTotalRidesById; // Pole do wyświetlania przejazdow uzytkowika
     private TextView textViewUserInfo; // Pole do wyświetlania informacji o użytkowniku
-    private TextView textViewPaymentById; // Pole do wyświetlania informacji o płatnościach
 
     private Button buttonAdminRides, buttonAdminPayments, buttonAdminRefuelings;
     private Ride lastRide;
@@ -52,10 +53,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Inicjalizacja pola tekstowego dla licznika
         textViewCounter = findViewById(R.id.textViewCounter);
-
-        // Inicjalizacja pola tekstowego dla przejazdów użytkownika
-        textViewTotalRidesById = findViewById(R.id.textViewTotalRidesById);
-        textViewPaymentById = findViewById(R.id.textViewPaymentById);
 
         textViewAccountBalance = findViewById(R.id.textViewAccountBalance);
 
@@ -303,8 +300,8 @@ public class HomeActivity extends AppCompatActivity {
 //                                        .append("\n");
                             }
                         }
-                        ridesText.append("Łączny przebyty dystans: ").append(totalDistance).append(" km");
-                        textViewTotalRidesById.setText(ridesText.toString());
+                        //ridesText.append("Łączny przebyty dystans: ").append(totalDistance).append(" km");
+                        //textViewTotalRidesById.setText(ridesText.toString());
 
 
                         // Obliczenie kwoty do zaplaty
@@ -314,7 +311,7 @@ public class HomeActivity extends AppCompatActivity {
                         totalCost = ((petrolConsumption * totalDistance) / 100) * fuelPrice;
                         totalCost = Math.round(totalCost * 100.0) / 100.0;
                         paymentText.append("Do zapłaty: ").append(totalCost).append(" zł");
-                        textViewPaymentById.setText(paymentText);
+                        //textViewPaymentById.setText(paymentText);
 
                     } else {
                         textViewCounter.setText("Brak danych o stanie licznika");
@@ -402,9 +399,27 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         }
 
+
+                        // wyswietlenie stanu konta
                         double accountBalance = totalAmount - totalCost;
-                          accountBalance = Math.round(accountBalance * 100.0) / 100.0;
-                        paymentText.append("\nStan konta: ").append(accountBalance).append(" zł");
+                        accountBalance = Math.round(accountBalance * 100.0) / 100.0;
+
+                        double dist = (accountBalance * 100) / (3 * 10);
+                        dist = Math.round(dist * 100.0) / 100.0;
+
+
+                        paymentText.append("Stan konta: ").append(accountBalance).append(" zł");
+                        paymentText.append(" - (").append(dist).append(" km )");
+
+                        // ustawienie koloru tla w zaleznosci od stanu konta
+                        CardView cardView = findViewById(R.id.cardViewAccountBalance);
+                        if (accountBalance < 10 && accountBalance >= 0) {
+                            cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#f8c471")));
+                            paymentText.append("\nDoładuj swoje konto!");
+                        } else if (accountBalance < 0) {
+                            cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ec7063")));
+                            paymentText.append("\nKoniecznie doładuj swoje konto!");
+                        }
                         textViewAccountBalance.setText(paymentText.toString());
 
                     } else {
