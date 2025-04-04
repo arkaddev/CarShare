@@ -147,6 +147,10 @@ public class AddPaymentActivity extends AppCompatActivity {
             if (result.equals("success")) {
 
                 Toast.makeText(AddPaymentActivity.this, "Płatność dodana!", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(AddPaymentActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
                 finish();
 
             } else {

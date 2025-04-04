@@ -415,10 +415,10 @@ public class HomeActivity extends AppCompatActivity {
                         CardView cardView = findViewById(R.id.cardViewAccountBalance);
                         if (accountBalance < 10 && accountBalance >= 0) {
                             cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#f8c471")));
-                            paymentText.append("\nDoładuj swoje konto!");
+                            paymentText.append("\n\nDoładuj swoje konto!");
                         } else if (accountBalance < 0) {
                             cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ec7063")));
-                            paymentText.append("\nKoniecznie doładuj swoje konto!");
+                            paymentText.append("\n\nKoniecznie doładuj swoje konto!");
                         }
                         textViewAccountBalance.setText(paymentText.toString());
 

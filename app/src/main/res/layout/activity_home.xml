@@ -168,14 +168,15 @@
         android:visibility="gone"/>
 
 
-    <!-- Siatka z kwadratami admin -->
+    <!-- Siatka z kwadratami admin android:visibility="gone" -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="3"
         android:rowCount="2"
         android:layout_gravity="center"
-        android:padding="8dp">
+        android:padding="8dp"
+        >
         <!-- przycisk admin historia przejazdow -->
         <Button
             android:id="@+id/buttonAdminRides"
