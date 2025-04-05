@@ -413,7 +413,9 @@ public class HomeActivity extends AppCompatActivity {
 
                         // ustawienie koloru tla w zaleznosci od stanu konta
                         CardView cardView = findViewById(R.id.cardViewAccountBalance);
-                        if (accountBalance < 10 && accountBalance >= 0) {
+                        if (accountBalance > 10) {
+                            cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#82e0aa")));
+                        } else if (accountBalance < 10 && accountBalance >= 0) {
                             cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#f8c471")));
                             paymentText.append("\n\nDoładuj swoje konto!");
                         } else if (accountBalance < 0) {
