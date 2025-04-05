@@ -125,7 +125,12 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
         android:padding="12dp"
-        android:backgroundTint="#82e0aa">
+        android:backgroundTint="@color/white"
+
+
+
+
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -176,6 +181,7 @@
         android:rowCount="2"
         android:layout_gravity="center"
         android:padding="8dp"
+        android:visibility="gone"
         >
         <!-- przycisk admin historia przejazdow -->
         <Button
