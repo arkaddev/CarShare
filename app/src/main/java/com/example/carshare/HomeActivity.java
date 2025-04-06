@@ -154,6 +154,18 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        //przekierowanie dla buttona nr 6
+        Button button6 = findViewById(R.id.button6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                intent.putExtra("token", token);  // Przekazujemy token
+                intent.putExtra("userId", currentUserId);  // Przekazujemy id użytkownika
+                startActivity(intent);
+            }
+        });
+
         //przekierowanie dla button Admin Ride
         buttonAdminRides = findViewById(R.id.buttonAdminRides);
         buttonAdminRides.setOnClickListener(new View.OnClickListener() {
