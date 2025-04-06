@@ -1,6 +1,7 @@
 package com.example.carshare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -36,12 +37,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Sprawdź, czy użytkownik jest już zalogowany
+        SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String token = preferences.getString("token", null);
+
+        if (token != null) {
+            // Jeśli token istnieje, użytkownik jest już zalogowany, przejdź do HomeActivity
+            String userId = preferences.getString("userId", null);
+            String username = preferences.getString("username", null);
+
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.putExtra("token", token);
+            intent.putExtra("userId", userId);
+            intent.putExtra("username", username);
+            startActivity(intent);
+            finish();  // Zakończenie bieżącej aktywności
+        }
+
+
+
+
+
+
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewMessage = findViewById(R.id.textViewMessage);
 
-       //poczatek walidacji terminu
+        //poczatek walidacji terminu
 
 
         textViewMain = findViewById(R.id.textViewMain);
@@ -128,6 +151,14 @@ public class MainActivity extends AppCompatActivity {
                         String token = response.getString("token");
 
                         String userId = response.getString("user_id");
+
+                        // Zapisujemy token i user_id w SharedPreferences
+                        SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("token", token);
+                        editor.putString("userId", userId);
+                        editor.putString("username", editTextUsername.getText().toString());
+                        editor.apply();
 
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         intent.putExtra("token", token);  // Przekazujemy token

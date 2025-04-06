@@ -181,7 +181,6 @@
         android:rowCount="2"
         android:layout_gravity="center"
         android:padding="8dp"
-        android:visibility="gone"
         >
         <!-- przycisk admin historia przejazdow -->
         <Button
